@@ -8,8 +8,9 @@ import ShippingRoute from "./ShippingRoute";
 import PaymentRoute from "./PaymentRoute";
 import AuctionRoute from "./AuctionRoute";
 import CreateAuctionRoute from "./CreateAuctionRoute";
-import AuctionIdRotue from "./AuctionIdRotue";
+import AuctionIdRoute from "./AuctionIdRoute";
 import PlaceOrderRoute from "./PlaceOrderRoute";
+import ProtectedRoute from "../components/protectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -22,8 +23,22 @@ const AppRoutes = () => {
       <Route path="/payment" element={<PaymentRoute />} />
       <Route path="/placeorder" element={<PlaceOrderRoute />} />
       <Route path="/auction" element={<AuctionRoute />} />
-      <Route path="/create-auction" element={<CreateAuctionRoute />} />
-      <Route path="/auctions/:id" element={<AuctionIdRotue />} />
+      <Route
+        path="/create-auction"
+        element={
+          <ProtectedRoute>
+            <CreateAuctionRoute />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/auctions/:id"
+        element={
+          <ProtectedRoute>
+            <AuctionIdRoute />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

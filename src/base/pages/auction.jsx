@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import AuctionItem from "../components/itemAution";
+import AuctionItem from "../components/itemAuction";
 import Loading from "../components/loading";
 import ErrorPage from "../components/errorPage";
 import { Store } from "../context/Store";

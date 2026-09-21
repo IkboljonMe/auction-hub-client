@@ -57,7 +57,7 @@ const AuctionDetail = () => {
     };
     fetchData();
 
-    const newSocket = io(process.env.REACT_APP_API_PROXY);
+    const newSocket = io(axios.defaults.baseURL);
     setSocket(newSocket);
 
     return () => {
@@ -68,32 +68,36 @@ const AuctionDetail = () => {
   useEffect(() => {
     if (socket) {
       socket.on("bid", (updatedAuction) => {
-        setAuction(updatedAuction);
+        // server sends bids of all auctions, take only this one
+        if (updatedAuction._id === id) {
+          setAuction(updatedAuction);
+        }
       });
     }
-  }, [socket]);
+  }, [socket, id]);
 
-  const handleSubmit = async (event, userName) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post(
-      `/api/auctions/${id}/bids`,
-      {
-        bidder: userName,
-        bidAmount: bid,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${userInfo.token}`,
+    try {
+      const response = await axios.post(
+        `/api/auctions/${id}/bids`,
+        {
+          bidAmount: bid,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
 
-    const data = response.data;
-    setAuction(data);
-    setBid("");
-    socket.emit("bid", data);
-    toast.success("Bid Placed Successfully 🎉");
+      setAuction(response.data);
+      setBid("");
+      toast.success("Bid Placed Successfully 🎉");
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
   };
 
   const handleBidChange = (event) => {
@@ -176,13 +180,14 @@ const AuctionDetail = () => {
                     </div>
                   )}
                 </>
-              ) : auction.bids[auction.bids.length] ? (
+              ) : auction.bids.length > 0 &&
+                auction.bids[auction.bids.length - 1].bidder === userInfo.name ? (
                 <button className="inline-block px-6 py-2 w-full leading-5 font-semibold rounded-lg text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-default">
                   You have the highest bid 🎉
                 </button>
               ) : userInfo ? (
                 <form
-                  onSubmit={(e) => handleSubmit(e, userInfo.name)}
+                  onSubmit={handleSubmit}
                   className="flex items-center"
                 >
                   <div className="relative flex-grow mr-4 pt-4">

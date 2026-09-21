@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "../pages/header";
-import AuctionDetail from "../pages/autionDetail";
+import AuctionDetail from "../pages/auctionDetail";
 
-const AuctionIdRotue = () => {
+const AuctionIdRoute = () => {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ const AuctionIdRotue = () => {
   );
 };
 
-export default AuctionIdRotue;
+export default AuctionIdRoute;

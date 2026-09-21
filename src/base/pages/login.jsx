@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import hn from "../assets/hn.png";
-import avatar from "../assets/avatar.svg";
 import axios from "axios";
 import { Store } from "../context/Store";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getError } from "../helpers/utils";
-import { FaUser } from "react-icons/fa";
-import { AiTwotoneLock } from "react-icons/ai";
 import "../styles/auth.css";
 function Login() {
   const navigate = useNavigate();

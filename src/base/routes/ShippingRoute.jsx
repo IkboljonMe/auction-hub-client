@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../pages/header";
-import Address from "../pages/adress";
+import Address from "../pages/address";
 
 const ShippingRoute = () => {
   return (
