@@ -1,53 +1,68 @@
-# Auction Client Side
+# Auction Hub Client
 
-This is the front-end client for the auction project. It's a React-based application that allows users to participate in online auctions. The project uses various libraries and dependencies to enhance the user experience and functionality.
+Frontend for **Auction Hub**, an online auction app. You can see all auctions, open one, watch the countdown and place bids. New bids show up for everyone right away without refreshing, thanks to Socket.IO. I built it to learn real-time features in React together with my own Node.js backend.
 
-Check out **server** repo of this project. [Click here](https://github.com/IkboljonMe/auction-backend)
+**Live:** https://client-auction-hub.vercel.app (the free server is often sleeping, so data may not load)
 
-| [Link](https://client-auction-hub.vercel.app) | ✅  |
-| --------------------------------------------- | --- |
-| Client                                        | ✅  |
-| Server                                        | ❌  |
+**Server repo:** [auction-hub-server](https://github.com/IkboljonMe/auction-hub-server)
 
-Server has spun down as it was free instance types with inactivity.
+## Features
 
-## Installation
+- Sign up and sign in (JWT saved in the app state)
+- List of all auctions
+- Auction page with countdown timer, current bid and bid history
+- Place a bid, the page updates live for all users
+- Shows "You have the highest bid" and the winner when time is over
+- Create auction with image upload (image upload is for admins)
+- Admin can delete auctions
+- Auction and create pages are only for logged in users
 
-Before getting started, ensure you have [Node.js](https://nodejs.org/) installed on your system.
+## Built with
 
-1. Clone this repository to your local machine.
-2. Navigate to the project directory:
+- React 18 (Create React App)
+- React Router v6
+- Socket.IO client
+- Axios
+- Tailwind CSS
+- React Toastify
+- React Helmet Async
+- Swiper
+
+## How to run
+
+Start the [server](https://github.com/IkboljonMe/auction-hub-server) first, then:
 
 ```bash
-cd auction
-```
-
-3. Install the required dependencies:
-
-```
+git clone https://github.com/IkboljonMe/auction-hub-client.git
+cd auction-hub-client
 npm install
-```
-
-## Usage
-
-To run the client locally, use the following command:
-
-```
+cp .env.example .env
 npm start
 ```
 
-This will start the development server and open the application in your web browser.
+`.env` has one variable, the server address:
 
-## Dependencies
+```
+REACT_APP_API_PROXY=http://localhost:5000
+```
 
-Here are some of the key dependencies used in this project:
+The app opens on http://localhost:3000
 
-- [React](https://reactjs.org/): A JavaScript library for building user interfaces.
-- [axios](https://axios-http.com/): A promise-based HTTP client for making API requests.
-- [Socket.IO](https://socket.io/): A library for real-time, bidirectional communication between clients and the server.
-- [React Router](https://reactrouter.com/): A library for handling navigation and routing in React applications.
-- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for building responsive and customizable designs.
-- [react-toastify](https://fkhadra.github.io/react-toastify/): A notification system for displaying messages to users.
-- And more...
+To make a production build run `npm run build`.
 
-You can find the complete list of dependencies in the `package.json` file.
+## Project structure
+
+```
+src/
+  App.jsx
+  base/
+    pages/        home, auction list, auction detail, create auction, login, register
+    components/   auction card, loading, protected route
+    routes/       all routes
+    context/      global store (user info)
+    styles/
+```
+
+---
+
+Made by [IkboljonMe](https://github.com/IkboljonMe)
